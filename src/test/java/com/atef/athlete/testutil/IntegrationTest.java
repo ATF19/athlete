@@ -1,5 +1,6 @@
 package com.atef.athlete.testutil;
 
+import com.atef.athlete.infrastructure.application.AthleteSpringApplication;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
@@ -11,10 +12,12 @@ import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
+import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace.NONE;
+import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
+
 @Tag(TestGroup.INTEGRATION_TEST)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
-        classes = {com.atef.athlete.infrastructure.application.AthleteSpringApplication.class})
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@SpringBootTest(webEnvironment = RANDOM_PORT, classes = {AthleteSpringApplication.class})
+@AutoConfigureTestDatabase(replace = NONE)
 @Testcontainers
 public abstract class IntegrationTest {
 
