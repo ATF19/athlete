@@ -6,28 +6,38 @@ plugins {
 
 group = 'com.atef'
 version = '1.0.0-SNAPSHOT'
-sourceCompatibility = '17'
+
+sourceCompatibility = JavaVersion.VERSION_17
+targetCompatibility = JavaVersion.VERSION_17
 
 repositories {
+	mavenLocal()
 	mavenCentral()
 }
 
 var jacksonVersion = findProperty("jackson.version")
 var junitVersion = findProperty("junit.version")
+var testContainersVersion = findProperty("testcontainers.version")
 
 dependencies {
-	implementation('org.springframework.boot:spring-boot-starter') {
-		exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
-	}
+	implementation('org.springframework.boot:spring-boot-starter')
+	implementation('org.springframework.boot:spring-boot-starter-web')
 	implementation('org.springframework.boot:spring-boot-starter-log4j2')
-	implementation("com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}")
-	implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:${jacksonVersion}")
+	implementation('org.springframework.boot:spring-boot-starter-data-jpa')
+	implementation("com.fasterxml.jackson.core:jackson-databind:$jacksonVersion")
+	implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:$jacksonVersion")
+	implementation("org.postgresql:postgresql:42.1.4")
 
-	testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
-	testImplementation("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
+
+	testImplementation("org.junit.jupiter:junit-jupiter-api:$junitVersion")
+	testImplementation("org.junit.jupiter:junit-jupiter-params:$junitVersion")
+	testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$junitVersion")
+	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.mockito:mockito-core:2.1.0")
 	testImplementation("org.assertj:assertj-core:3.6.1")
-
+	testImplementation("org.testcontainers:testcontainers:$testContainersVersion")
+	testImplementation("org.testcontainers:junit-jupiter:$testContainersVersion")
+	testImplementation("org.testcontainers:postgresql:$testContainersVersion")
 }
 
 test {
@@ -39,11 +49,18 @@ test {
 
 task integrationTest(type: Test) {
 	useJUnitPlatform() {
-		includeTags 'UnitTest'
-		excludeTags 'IntegrationTest'
+		includeTags 'IntegrationTest'
+		excludeTags 'UnitTest'
 	}
 }
 
 task allTest(type: Test) {
 	useJUnitPlatform()
+}
+
+configurations {
+	all {
+		exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+		exclude group: 'junit', module: 'junit'
+	}
 }
