@@ -33,6 +33,10 @@ public class Roles {
         grantedRoles.remove(role);
     }
 
+    public boolean have(Role role) {
+        return grantedRoles.contains(role);
+    }
+
     public Stream<Role> grantedRoles() {
         return grantedRoles.stream();
     }

@@ -105,4 +105,34 @@ class RolesTest extends UnitTest {
         // then
         assertThat(roles.grantedRoles()).containsOnly(dummyRole);
     }
+
+    @Test
+    public void does_not_have_role() {
+        // given
+        SuperAdmin superAdmin = new SuperAdmin();
+        Set<Role> listOfRoles = Set.of(superAdmin);
+        var roles = Roles.from(listOfRoles);
+        Role testRole = () -> new RoleName("Test");
+
+        // when
+        boolean result = roles.have(testRole);
+
+        // then
+        assertThat(result).isFalse();
+    }
+
+    @Test
+    public void have_role() {
+        // given
+        SuperAdmin superAdmin = new SuperAdmin();
+        Role testRole = () -> new RoleName("Test");
+        Set<Role> listOfRoles = Set.of(superAdmin, testRole);
+        var roles = Roles.from(listOfRoles);
+
+        // when
+        boolean result = roles.have(testRole);
+
+        // then
+        assertThat(result).isTrue();
+    }
 }
