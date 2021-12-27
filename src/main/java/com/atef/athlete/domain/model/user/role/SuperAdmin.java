@@ -16,4 +16,9 @@ public class SuperAdmin implements Role {
     public boolean equals(Object obj) {
         return obj instanceof SuperAdmin;
     }
+
+    @Override
+    public String toString() {
+        return "SuperAdmin{}";
+    }
 }
