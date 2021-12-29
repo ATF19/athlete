@@ -29,6 +29,7 @@ dependencies {
 	implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:$jacksonVersion")
 	implementation("org.postgresql:postgresql:42.1.4")
 	implementation("com.google.guava:guava:31.0.1-jre")
+	implementation("org.flywaydb:flyway-core")
 	compileOnly("org.projectlombok:lombok:$lombokVersion")
 	annotationProcessor("org.projectlombok:lombok:$lombokVersion")
 

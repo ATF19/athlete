@@ -1,9 +1,12 @@
 package com.atef.athlete.testutil;
 
 import com.atef.athlete.infrastructure.application.AthleteSpringApplication;
+import org.flywaydb.core.Flyway;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.DynamicPropertyRegistry;
@@ -21,6 +24,9 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 @Testcontainers
 public abstract class IntegrationTest {
 
+    @Autowired
+    private Flyway flyway;
+
     @Container
     private static final PostgreSQLContainer<?> postgreSQLContainer = new PostgreSQLContainer<>("postgres:13")
             .withUsername("psUserForTests")
@@ -32,7 +38,6 @@ public abstract class IntegrationTest {
         registry.add("spring.datasource.url", postgreSQLContainer::getJdbcUrl);
         registry.add("spring.datasource.password", postgreSQLContainer::getPassword);
         registry.add("spring.datasource.username", postgreSQLContainer::getUsername);
-        registry.add("spring.jpa.hibernate.ddl-auto", () -> "create-drop");
     }
 
     @BeforeAll
@@ -45,4 +50,9 @@ public abstract class IntegrationTest {
         postgreSQLContainer.stop();
     }
 
+    @BeforeEach
+    public void cleanDatabase() {
+        flyway.clean();
+        flyway.migrate();
+    }
 }
