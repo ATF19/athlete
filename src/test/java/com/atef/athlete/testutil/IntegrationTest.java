@@ -1,8 +1,8 @@
 package com.atef.athlete.testutil;
 
 import com.atef.athlete.infrastructure.application.AthleteSpringApplication;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Tag;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -35,13 +35,13 @@ public abstract class IntegrationTest {
         registry.add("spring.jpa.hibernate.ddl-auto", () -> "create-drop");
     }
 
-    @BeforeEach
-    public void initDatabaseForTests() {
+    @BeforeAll
+    public static void initDatabaseForTests() {
         postgreSQLContainer.start();
     }
 
-    @AfterEach
-    public void stopDatabaseForTests() {
+    @AfterAll
+    public static void stopDatabaseForTests() {
         postgreSQLContainer.stop();
     }
 
