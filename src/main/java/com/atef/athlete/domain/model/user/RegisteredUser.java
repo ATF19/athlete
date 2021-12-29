@@ -8,7 +8,7 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 public class RegisteredUser extends DomainEntity<UserId> {
-    public final Username username;
+    private final Username username;
     private Email email;
     private Name name;
     private Optional<Birthdate> birthdate;

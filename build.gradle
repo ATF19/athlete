@@ -18,6 +18,7 @@ repositories {
 var jacksonVersion = findProperty("jackson.version")
 var junitVersion = findProperty("junit.version")
 var testContainersVersion = findProperty("testcontainers.version")
+var lombokVersion = findProperty("lombok.version")
 
 dependencies {
 	implementation('org.springframework.boot:spring-boot-starter')
@@ -28,6 +29,8 @@ dependencies {
 	implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:$jacksonVersion")
 	implementation("org.postgresql:postgresql:42.1.4")
 	implementation("com.google.guava:guava:31.0.1-jre")
+	compileOnly("org.projectlombok:lombok:$lombokVersion")
+	annotationProcessor("org.projectlombok:lombok:$lombokVersion")
 
 	testImplementation("org.junit.jupiter:junit-jupiter-api:$junitVersion")
 	testImplementation("org.junit.jupiter:junit-jupiter-params:$junitVersion")

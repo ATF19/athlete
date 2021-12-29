@@ -7,7 +7,7 @@ import com.atef.athlete.domain.model.user.role.SuperAdmin;
 import java.util.Optional;
 
 public final class RegisteredUserBuilder extends DomainEntityBuilder<UserId> {
-    private Username username;
+    private Username username = new Username("forTests");
     private Email email = new Email("createdFrom@builder.com");
     private Name name = new Name("Iam", "a Builder");
     private Optional<Birthdate> birthdate = Optional.empty();
@@ -42,8 +42,13 @@ public final class RegisteredUserBuilder extends DomainEntityBuilder<UserId> {
         return this;
     }
 
-    public RegisteredUserBuilder withBirthdate(Optional<Birthdate> birthdate) {
-        this.birthdate = birthdate;
+    public RegisteredUserBuilder withBirthdate(Birthdate birthdate) {
+        this.birthdate = Optional.of(birthdate);
+        return this;
+    }
+
+    public RegisteredUserBuilder withoutBirthday() {
+        birthdate = Optional.empty();
         return this;
     }
 
@@ -54,6 +59,11 @@ public final class RegisteredUserBuilder extends DomainEntityBuilder<UserId> {
 
     public RegisteredUserBuilder withRoles(Roles roles) {
         this.roles = roles;
+        return this;
+    }
+
+    public RegisteredUserBuilder withoutRoles() {
+        roles = Roles.empty();
         return this;
     }
 
