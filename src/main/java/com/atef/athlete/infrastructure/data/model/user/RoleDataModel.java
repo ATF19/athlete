@@ -4,6 +4,7 @@ import com.atef.athlete.domain.model.user.role.Role;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.UUID;
 
 @Entity
 @Table(name = "ROLES")
@@ -13,7 +14,7 @@ public class RoleDataModel {
     @Id
     @GeneratedValue
     @Column(name = "ID")
-    private Long id;
+    private UUID id;
 
     @Column(name = "TYPE", updatable = false, nullable = false)
     private String type;

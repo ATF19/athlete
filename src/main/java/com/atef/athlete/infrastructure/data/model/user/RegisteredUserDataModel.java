@@ -28,7 +28,7 @@ public class RegisteredUserDataModel extends AbstractEntityDataModel {
     @Column(name = "USERNAME", nullable = false, updatable = false, unique = true)
     private String username;
 
-    @Column(name = "EMAIL", nullable = false)
+    @Column(name = "EMAIL", nullable = false, unique = true)
     private String email;
 
     @Column(name = "FIRST_NAME", nullable = false)
@@ -44,7 +44,7 @@ public class RegisteredUserDataModel extends AbstractEntityDataModel {
     private String encryptedPassword;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "ROLES")
+    @JoinColumn(name = "USER_ID", nullable = false)
     private Set<RoleDataModel> roles;
 
     public RegisteredUserDataModel() {

@@ -51,6 +51,7 @@ class UserDataRepositoryTest extends IntegrationTest {
         RegisteredUser registeredUser = RegisteredUserBuilder.aSuperAdmin()
                 .withBirthdate(new Birthdate(new Date()))
                 .build();
+        users.create(registeredUser);
 
         // when
         Optional<RegisteredUser> result = users.byUsernameOrEmail(registeredUser.username(), new Email("notfound@either.com"));
@@ -65,6 +66,7 @@ class UserDataRepositoryTest extends IntegrationTest {
         RegisteredUser registeredUser = RegisteredUserBuilder.aSuperAdmin()
                 .withBirthdate(new Birthdate(new Date()))
                 .build();
+        users.create(registeredUser);
 
         // when
         Optional<RegisteredUser> result = users.byUsernameOrEmail(new Username("Not found"), registeredUser.email());
